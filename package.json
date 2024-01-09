@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "intl-messageformat": "^10.5.8",
+    "langdetect": "^0.2.1"
+  }
+}
