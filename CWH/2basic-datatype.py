@@ -1,55 +1,61 @@
-# Variables
-a = "Hello World"
-b = 5
-c = 15.17
-
-print(a)
-print(b)
-print(c)
-
-print("\n")
-
-# Datatypes
-print(type(a))
-print(type(b))
-print(type(c))
-
-print("\n")
-
-d = "Hello"
-e = "World"
-
-h="55"
-i="10"
-
-f=15
-g=20
-
-print(d+e)
-print(h+i)#Addition is not performed because it is a string is concatnated
-print(int(h)+int(i))#typecast
-print(g+f)
-
-#Global variable
-# x = "awesome"
+# # Variables
+# a = "Hello World" #string
+# b = 5 #int
+# c = 15.17   #float
 #
-# def myfunc():
-#   x = "fantastic"
-#   print("Python is " + x)
+# print(a)
+# print(b)
+# print(c)
 #
-# myfunc()
+# print("\n")
 #
-# print("Python is " + x)
+# # Datatypes
+# print("type of a = ",type(a))
+# print(type(b))
+# print(type(c))
 #
+# print("\n")
+#
+# d = "Hello"
+# e = "World"
+#
+# h="55"
+# print("type of h = ",type(h))
+# i="10"
+#
+# f=15
+# print("type of f = ",type(f))
+# g=20
+#
+# # print(d+e)
+# print(h+i)#Addition is not performed because it is a string is concatnated
+# print(int(h)+int(i))#typecast
+# print(g+f)
+# print(str(f)+str(g))
+
+# Global variable
+x = "awesome"
+
+def myfunc():
+  x = "fantastic"
+  print("Python is " + x)
+
+myfunc()
+
+print("Python is " + x)
+
 
 
 x = "awesome"
 
 def myfunc():
+    global b
+    b =10
     global x
     x = "fantastic"
 
 myfunc()
+print(b)
 
 print("Python is " + x)
 

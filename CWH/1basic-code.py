@@ -1,5 +1,14 @@
-print("Hello")
-print(2)
+# print("Hello"
+#       "ffff"
+#       "ffff")
+# print('hello')
+# print('''hrllo
+# bbbb
+# nnn
+# nnnn
+#
+# nn''')
+print(2.5555)
 
 print("Hii", end=" ")  # end="" used to avoid new line.
 # we can insert in between " "
