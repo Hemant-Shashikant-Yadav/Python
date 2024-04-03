@@ -1,47 +1,39 @@
+import random
 import pandas as pd
-import numpy as np
 
-# Number of student records
-total_students = 500
+# List of sample student names
+boy_names = ["Michael", "John", "Robert", "William", "David", "Joseph", "Daniel", "James", "John", "Matthew"]
+girl_names = ["Mary", "Jennifer", "Linda", "Patricia", "Elizabeth", "Susan", "Jessica", "Sarah", "Karen", "Nancy"]
 
-# Number of lectures
-num_lectures = 10
+def generate_student_records(num_records):
+    records = []
+    for i in range(num_records):
+        roll_number = f"R{i + 1:03}"
+        name = random.choice(boy_names) if i % 2 == 0 else random.choice(girl_names)
+        gender = "Male" if i % 2 == 0 else "Female"
+        attendance_out_of_30_days = random.randint(15, 30)
+        attendance_percentage = (attendance_out_of_30_days / 30) * 100
+        student_mail_id = f"student{i + 1}@example.com"
+        parent_mail_id = f"parent{i + 1}@example.com"
+        records.append([roll_number, name, gender, attendance_out_of_30_days, attendance_percentage, student_mail_id, parent_mail_id])
+    return records
 
-# Generate student roll numbers
-roll_numbers = ['R' + str(i).zfill(4) for i in range(1, total_students + 1)]
+def introduce_defaulters(records):
+    num_defaulters = int(0.2 * len(records))
+    defaulter_indices = random.sample(range(len(records)), num_defaulters)
+    for idx in defaulter_indices:
+        records[idx][4] = random.randint(0, 39)  # Set attendance percentage of defaulters less than 40%
 
-# Generate lecture names
-lecture_names = ['Lecture ' + str(i) for i in range(1, num_lectures + 1)]
+def generate_excel(records):
+    df = pd.DataFrame(records, columns=["Roll Number", "Name", "Gender", "Attendance out of 30 days", "Attendance Percentage", "Student Mail ID", "Parent Mail ID"])
+    df.to_excel("FY_A_ML2.xlsx", index=False)
+    print("Excel file generated successfully.")
 
-# Generate student attendance for each lecture
-attendance = np.random.randint(0, 31, size=(total_students, num_lectures))
+def main():
+    num_records = 500
+    records = generate_student_records(num_records)
+    introduce_defaulters(records)
+    generate_excel(records)
 
-# Calculate total attendance and attendance percentage
-total_attendance = np.sum(attendance, axis=1)
-attendance_percentage = (total_attendance / (num_lectures * 30)) * 100
-
-# Generate student mail IDs
-student_emails = ['student' + str(i).zfill(3) + '@example.com' for i in range(1, total_students + 1)]
-
-# Generate parents mail IDs
-parents_emails = ['parent' + str(i).zfill(3) + '@example.com' for i in range(1, total_students + 1)]
-
-# Create DataFrame for student records
-df = pd.DataFrame({
-    'Roll Number': np.repeat(roll_numbers, num_lectures),
-    'Lecture Name': np.tile(lecture_names, total_students),
-    'Attendance (out of 30)': attendance.flatten(),
-    'Attendance Percentage': np.repeat(attendance_percentage, num_lectures),
-    'Student Email': np.repeat(student_emails, num_lectures),
-    'Parent Email': np.repeat(parents_emails, num_lectures)
-})
-
-# Identify defaulters
-defaulter_mask = (attendance_percentage < 40)
-defaulter_indices = np.random.choice(np.where(defaulter_mask)[0], size=int(0.2 * total_students), replace=False)
-
-# Mark defaulters
-df.loc[df.index.isin(defaulter_indices), 'Attendance Percentage'] = 0  # Set attendance percentage to 0 for defaulters
-
-# Save DataFrame to Excel file
-df.to_excel('student_defaulter_attendance.xlsx', index=False)
+if __name__ == "__main__":
+    main()
